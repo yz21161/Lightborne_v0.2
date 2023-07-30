@@ -1,0 +1,118 @@
+[gd_scene load_steps=10 format=3 uid="uid://do71uwwomw7ot"]
+
+[ext_resource type="Texture2D" uid="uid://clqlgwleosmjf" path="res://d5h7dz5-9bfff8f5-8506-4a5f-9415-a1fe18c1fc26.png" id="1_007s5"]
+[ext_resource type="PackedScene" uid="uid://dn1mgfd6dqo7c" path="res://mage.tscn" id="1_lm4co"]
+[ext_resource type="PackedScene" path="res://lvl1_tiles.tscn" id="3_w4idr"]
+[ext_resource type="PackedScene" uid="uid://daghis1151c0t" path="res://Slime.tscn" id="4_tlrag"]
+[ext_resource type="PackedScene" uid="uid://c2p211sdya2lm" path="res://test_enemy.tscn" id="6_ukedd"]
+[ext_resource type="PackedScene" uid="uid://b4wcqwa3do87c" path="res://platform.tscn" id="11_t3mnh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_otw2r"]
+size = Vector2(5445, 112)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1phf0"]
+size = Vector2(5510.5, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p1xoh"]
+size = Vector2(33, 29)
+
+[node name="Node2D" type="Node2D"]
+metadata/_edit_horizontal_guides_ = [-2755.0]
+
+[node name="Background" type="Sprite2D" parent="."]
+scale = Vector2(10, 10)
+texture = ExtResource("1_007s5")
+
+[node name="Mage" parent="." instance=ExtResource("1_lm4co")]
+scale = Vector2(0.8, 0.8)
+
+[node name="TileMap2" parent="." instance=ExtResource("3_w4idr")]
+
+[node name="Test_enemy" parent="." instance=ExtResource("6_ukedd")]
+visible = false
+position = Vector2(22, 252)
+
+[node name="deadzone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="deadzone"]
+position = Vector2(-477.499, 665)
+shape = SubResource("RectangleShape2D_otw2r")
+
+[node name="freefall" type="Area2D" parent="."]
+position = Vector2(2, -1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="freefall"]
+position = Vector2(-641.75, 191)
+shape = SubResource("RectangleShape2D_1phf0")
+
+[node name="Slime" parent="." instance=ExtResource("4_tlrag")]
+visible = false
+position = Vector2(-49, 250)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(15.5, -2929)
+shape = SubResource("RectangleShape2D_p1xoh")
+
+[node name="AnimatableBody2D" parent="." instance=ExtResource("11_t3mnh")]
+position = Vector2(-1928, -1)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -170.0
+offset_top = -54.0
+offset_right = -23.0
+offset_bottom = 24.0
+text = "Use WASD to move
+Left click to dash
+Space bar to jump"
+
+[node name="Label2" type="Label" parent="."]
+offset_left = -1537.0
+offset_top = -2124.0
+offset_right = -1380.0
+offset_bottom = -2072.0
+text = "An impossible jump,
+ or a leap of faith?"
+
+[node name="Label3" type="Label" parent="."]
+offset_left = 37.0
+offset_top = -331.0
+offset_right = 204.0
+offset_bottom = -279.0
+text = "A difficult jump,
+ but entierly possible."
+
+[node name="Label4" type="Label" parent="."]
+offset_left = 98.0
+offset_top = -1089.0
+offset_right = 139.0
+offset_bottom = -1063.0
+text = "Haha
+"
+
+[node name="Label5" type="Label" parent="."]
+offset_left = -1301.0
+offset_top = -2712.0
+offset_right = -1012.0
+offset_bottom = -2686.0
+text = "some are not visible to the naked eye"
+
+[node name="Label6" type="Label" parent="."]
+offset_left = 6.0
+offset_top = -4260.0
+offset_right = 284.0
+offset_bottom = -4208.0
+text = "Congrats,
+ I'll send you to the underworld now"
+
+[node name="Label7" type="Label" parent="."]
+offset_left = 17.0
+offset_top = -51.0
+offset_right = 216.0
+offset_bottom = -25.0
+text = "Welcome to the Hellspire!"
+
+[connection signal="body_entered" from="deadzone" to="Mage" method="_on_deadzone_body_entered"]
+[connection signal="body_entered" from="freefall" to="Mage" method="_on_freefall_body_entered"]
+[connection signal="body_entered" from="Area2D" to="Mage" method="_on_area_2d_body_entered"]
